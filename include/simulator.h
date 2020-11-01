@@ -9,6 +9,7 @@ namespace idealgas {
 namespace visualizer {
 
 using std::vector;
+using glm::vec2;
 
 /**
  * A simulator that visualizes the motion of a number of ideal gas particles
@@ -16,8 +17,19 @@ using std::vector;
  */
 class Simulator {
   public:
-    //TODO: write constructor comment after all vars needed are added, etc.
-    Simulator(size_t number_particles) : particles_(number_particles) {};
+    /**
+     * Constructor for a Simulator.
+     *
+     * @param top_left_corner   the coordinates of container's top left corner.
+     * @param number_particles  the number of particles in this simulation.
+     * @param container_width   the width in pixels of the container.
+     * @param container_height  the height in pixels of the container.
+     */
+    Simulator(const vec2& top_left_corner, size_t number_particles,
+              size_t container_width, size_t container_height) :
+              top_left_corner_(top_left_corner), particles_(number_particles),
+              container_width_(container_width),
+              container_height_(container_height) {};
 
     /**
      * Displays the current state of the particles in the Cinder application.
@@ -25,7 +37,10 @@ class Simulator {
     void Draw() const;
 
   private:
+    vec2 top_left_corner_;
     vector<Particle> particles_;
+    size_t container_width_;
+    size_t container_height_;
 };
 
 } // namespace visualizer
