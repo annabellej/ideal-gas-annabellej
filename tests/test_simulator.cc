@@ -1,3 +1,3 @@
-#include "visualizer/simulator.h"
+#include "simulator.h"
 #include <catch2/catch.hpp>
 

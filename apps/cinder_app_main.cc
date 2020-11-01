@@ -1,3 +1,9 @@
-#include <visualizer/ideal_gas_app.h>
+#include "ideal_gas_app.h"
 
-//TODO: implement after setting up visualizer/ideal gas app stuff
+using idealgas::visualizer::IdealGasApp;
+
+void prepareSettings(IdealGasApp::Settings* settings) {
+  settings->setResizable(false);
+}
+
+CINDER_APP(IdealGasApp, ci::app::RendererGl, prepareSettings);
