@@ -6,12 +6,13 @@ namespace visualizer {
 
 IdealGasApp::IdealGasApp() : simulator_(glm::vec2(kMargin, kMargin),
                                         kNumParticles, kContainerWidth,
-                                        kContainerHeight) {
+                                        kContainerHeight, kParticleMass,
+                                        kParticleRadius, kParticleColor) {
   ci::app::setWindowSize((int) kWindowSize, (int) kWindowSize);
 };
 
 void IdealGasApp::update() {
-  //TODO: implement update (advance simulation by 1 unit time)
+  simulator_.Update();
 }
 
 void IdealGasApp::draw() {

@@ -25,15 +25,6 @@ struct Particle {
   Particle() : position(0,0), velocity(0,0) {};
 
   /**
-    * Constructor for a Particle object given position and velocity.
-    * Particle has no set mass, radius, or color.
-    *
-    * @param pos the initial (current) position of this Particle.
-    * @param vel the initial (current) velocity of this Particle.
-    */
-  Particle(vec2 pos, vec2 vel) : position(pos), velocity(vel) {};
-
-  /**
     * Constructor for a Particle object given all fields.
     *
     * @param pos the initial (current) position of this Particle.
