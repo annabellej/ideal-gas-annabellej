@@ -54,6 +54,11 @@ class Simulator {
     size_t container_width_;
     size_t container_height_;
 
+    //maximum values of position/velocity for particles in container:
+    size_t max_x_position_;
+    size_t max_y_position_;
+    int max_velocity_magnitude_;
+
     /**
      * Generates a random double between a given min and max value.
      *
@@ -63,6 +68,19 @@ class Simulator {
      * @return a random double in the given range.
      */
     double GenerateRandomDouble(double max_value, double min_value) const;
+
+    /**
+     * Handles a possible collision between a current particle and another.
+     * Does nothing if particles do not collide (aka not touching or not moving
+     * towards each other).
+     * If particles do collide, velocity of current particle is adjusted
+     * accordingly.
+     *
+     * @param current_particle the current particle to examine.
+     * @param other_particle   the other particle to examine.
+     */
+    void HandlePossibleCollision(Particle& current_particle,
+                                 const Particle& other_particle);
 };
 
 } // namespace visualizer

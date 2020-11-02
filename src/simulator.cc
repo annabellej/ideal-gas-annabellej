@@ -6,6 +6,8 @@ namespace idealgas {
 namespace visualizer {
 
 using glm::vec2;
+using glm::length;
+using glm::dot;
 
 Simulator::Simulator(const vec2 &top_left_corner, size_t number_particles,
                      size_t container_width, size_t container_height,
@@ -16,21 +18,21 @@ Simulator::Simulator(const vec2 &top_left_corner, size_t number_particles,
   container_height_ = container_height;
 
   //generate given number of random particles
-  size_t max_x_position = container_width_ - particle_radius * 2;
-  size_t max_y_position = container_height_ - particle_radius * 2;
-  int max_velocity_magnitude = particle_radius / 2;
+  max_x_position_ = container_width_ - particle_radius * 2;
+  max_y_position_ = container_height_ - particle_radius * 2;
+  max_velocity_magnitude_ = particle_radius / 2;
 
   for (int index = 0; index < number_particles; index++) {
     //generate random position
-    double x_position = GenerateRandomDouble((double) max_x_position, 0.0);
-    double y_position = GenerateRandomDouble((double) max_y_position, 0.0);
+    double x_position = GenerateRandomDouble((double) max_x_position_, 0.0);
+    double y_position = GenerateRandomDouble((double) max_y_position_, 0.0);
     vec2 particle_position(x_position, y_position);
 
     //generate random velocity
-    double x_velocity = GenerateRandomDouble((double) max_velocity_magnitude,
-                                             (double) -max_velocity_magnitude);
-    double y_velocity = GenerateRandomDouble((double) max_velocity_magnitude,
-                                             (double) -max_velocity_magnitude);
+    double x_velocity = GenerateRandomDouble((double) max_velocity_magnitude_,
+                                            (double) -max_velocity_magnitude_);
+    double y_velocity = GenerateRandomDouble((double) max_velocity_magnitude_,
+                                            (double) -max_velocity_magnitude_);
     vec2 particle_velocity(x_velocity, y_velocity);
 
     //add new particle to vector of particles
@@ -41,8 +43,24 @@ Simulator::Simulator(const vec2 &top_left_corner, size_t number_particles,
 
 void Simulator::Update() {
   for (Particle& particle: particles_) {
-    //check if collision happens
+    //check for collision w/ horizontal wall (top/bottom of container)
+    if ((particle.position.y <= 0 && particle.velocity.y < 0) ||
+        (particle.position.y >= max_y_position_ && particle.velocity.y > 0)) {
+      particle.velocity.y = -particle.velocity.y;
+    }
 
+    //check for collision w/ vertical wall (left/right side of container)
+    if ((particle.position.x <= 0 && particle.velocity.x < 0) ||
+        (particle.position.x >= max_x_position_ && particle.velocity.x > 0)) {
+      particle.velocity.x = -particle.velocity.x;
+    }
+
+    //check for collision w/ other particle
+    for (Particle& other_particle: particles_) {
+      if (&particle != &other_particle) { //avoid comparing particle to itself
+        HandlePossibleCollision(particle, other_particle);
+      }
+    }
 
     //update particle's position
     particle.position += particle.velocity;
@@ -68,6 +86,31 @@ void Simulator::Draw() const {
 
 double Simulator::GenerateRandomDouble(double max_value, double min_value) const {
   return (max_value - min_value) * (double) rand() / (double) RAND_MAX;
+}
+
+void Simulator::HandlePossibleCollision(Particle &current_particle,
+                                        const Particle &other_particle) {
+  double distance = length(current_particle.position - other_particle.position);
+  bool are_moving_towards = //if particles are moving towards each other
+          dot(current_particle.velocity - other_particle.velocity,
+              current_particle.position - other_particle.position) < 0;
+
+  if ((distance <= current_particle.radius + other_particle.radius) &&
+      are_moving_towards) {
+    vec2 v1 = current_particle.velocity;
+    vec2 v2 = other_particle.velocity;
+
+    vec2 x1 = current_particle.position;
+    vec2 x2 = other_particle.position;
+
+    size_t m1 = current_particle.mass;
+    size_t m2 = other_particle.mass;
+
+    double multiplier = (2 * m2 / (m1 + m2)) *
+                  (dot(v1 - v2, x1 - x2) / (length(x1 - x2) * length(x1 - x2)));
+    current_particle.velocity = v1 -  (vec2((x1 - x2).x * multiplier,
+                                            (x1 - x2).y * multiplier));
+  }
 }
 
 } // namespace visualizer
