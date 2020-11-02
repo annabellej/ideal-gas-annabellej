@@ -25,9 +25,9 @@ class IdealGasApp : public ci::app::App {
     const size_t kContainerWidth = 600;
     const size_t kContainerHeight = 800;
 
-    const size_t kNumParticles = 10;
-    const size_t kParticleMass = 10;
-    const size_t kParticleRadius = 4;
+    const size_t kNumParticles = 15;
+    const size_t kParticleMass = 5;
+    const size_t kParticleRadius = 5;
     const ci::Color kParticleColor = "white";
 
   private:

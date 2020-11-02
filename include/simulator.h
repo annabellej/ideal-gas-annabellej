@@ -55,9 +55,9 @@ class Simulator {
     size_t container_height_;
 
     //maximum values of position/velocity for particles in container:
-    size_t max_x_position_;
-    size_t max_y_position_;
-    int max_velocity_magnitude_;
+    double max_x_position_;
+    double max_y_position_;
+    double max_velocity_magnitude_;
 
     /**
      * Generates a random double between a given min and max value.

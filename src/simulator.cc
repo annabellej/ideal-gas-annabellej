@@ -18,22 +18,22 @@ Simulator::Simulator(const vec2 &top_left_corner, size_t number_particles,
   container_height_ = container_height;
 
   //generate given number of random particles
-  max_x_position_ = container_width_ - particle_radius * 2;
-  max_y_position_ = container_height_ - particle_radius * 2;
-  max_velocity_magnitude_ = particle_radius / 2;
+  max_x_position_ = (double) container_width_ - particle_radius * 2;
+  max_y_position_ = (double) container_height_ - particle_radius * 2;
+  max_velocity_magnitude_ = particle_radius * 0.5;
+
+  //generate random velocity for all particles
+  double x_velocity = GenerateRandomDouble(max_velocity_magnitude_,
+                                           -max_velocity_magnitude_);
+  double y_velocity = GenerateRandomDouble(max_velocity_magnitude_,
+                                           -max_velocity_magnitude_);
+  vec2 particle_velocity(x_velocity, y_velocity);
 
   for (int index = 0; index < number_particles; index++) {
     //generate random position
-    double x_position = GenerateRandomDouble((double) max_x_position_, 0.0);
-    double y_position = GenerateRandomDouble((double) max_y_position_, 0.0);
+    double x_position = GenerateRandomDouble(max_x_position_, 0.0);
+    double y_position = GenerateRandomDouble(max_y_position_, 0.0);
     vec2 particle_position(x_position, y_position);
-
-    //generate random velocity
-    double x_velocity = GenerateRandomDouble((double) max_velocity_magnitude_,
-                                            (double) -max_velocity_magnitude_);
-    double y_velocity = GenerateRandomDouble((double) max_velocity_magnitude_,
-                                            (double) -max_velocity_magnitude_);
-    vec2 particle_velocity(x_velocity, y_velocity);
 
     //add new particle to vector of particles
     particles_.push_back(Particle(particle_position, particle_velocity,
