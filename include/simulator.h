@@ -37,7 +37,7 @@ class Simulator {
               const ci::Color& particle_color);
 
     /**
-     * Updates the particles after one unit of time.
+     * Updates the particles' movement after one unit of time.
      */
     void Update();
 
@@ -45,6 +45,27 @@ class Simulator {
      * Displays the current state of the particles in the Cinder application.
      */
     void Draw() const;
+
+    /**
+     * Fetch the particle at the given index in this simulator's vector of
+     * particles.
+     *
+     * @param index the index of the particle to retrieve.
+     *
+     * @return a reference to the particle at the given index.
+     */
+    Particle& GetParticleAt(size_t index);
+
+    /**
+     * Gets rid of all the particles in this simulator.
+     */
+    void ClearParticles();
+
+    /**
+     * Adds an additional particle to the simulator.
+     * @param particle
+     */
+    void AddParticle(const Particle& particle);
 
   private:
     vec2 top_left_corner_;
@@ -78,9 +99,12 @@ class Simulator {
      *
      * @param current_particle the current particle to examine.
      * @param other_particle   the other particle to examine.
+     *
+     * @return true  if there was a collision between particles, else
+     *         false if there was no collision.
      */
-    void HandlePossibleCollision(Particle& current_particle,
-                                 const Particle& other_particle);
+    bool HandlePossibleCollision(Particle& current_particle,
+                                 Particle& other_particle);
 };
 
 } // namespace visualizer

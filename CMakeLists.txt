@@ -53,7 +53,6 @@ list(APPEND SOURCE_FILES src/ideal_gas_app.cc
                          src/simulator.cc)
 
 list(APPEND TEST_FILES tests/test_simulator.cc)
-list(APPEND TEST_FILES tests/test_simulator.cc)
 
 ci_make_app(
         APP_NAME    ideal-gas-visualizer

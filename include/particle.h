@@ -20,9 +20,10 @@ struct Particle {
   /**
     * Default constructor for a Particle object.
     * Particle is at origin with no velocity.
-    * Particle has no set mass, radius, or color.
+    * Default mass = 1, radius = 1, color is white.
     */
-  Particle() : position(0,0), velocity(0,0) {};
+  Particle() : position(0,0), velocity(0,0), mass(1), radius(1),
+               color("white") {};
 
   /**
     * Constructor for a Particle object given all fields.
