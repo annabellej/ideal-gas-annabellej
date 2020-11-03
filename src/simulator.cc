@@ -20,8 +20,7 @@ Simulator::Simulator(const vec2 &top_left_corner, size_t number_particles,
   //generate given number of random particles
   max_x_position_ = (double) container_width_ - particle_radius * 2;
   max_y_position_ = (double) container_height_ - particle_radius * 2;
-  max_velocity_magnitude_ = particle_radius * 0.5;
-
+  max_velocity_magnitude_ = particle_radius * 0.5; //v is small relative to r
   //generate random velocity for all particles
   double x_velocity = GenerateRandomDouble(max_velocity_magnitude_,
                                            -max_velocity_magnitude_);
@@ -44,7 +43,7 @@ Simulator::Simulator(const vec2 &top_left_corner, size_t number_particles,
 void Simulator::Update() {
   //keep track of particles already updated if colliding with an earlier one
   vector<bool> updated_particles(particles_.size(), false);
-
+  //loop through particles and update their positions
   for (int index = 0; index < particles_.size(); ++index) {
     //check if this particle already handled from collision with earlier one
     if (updated_particles.at(index)) {
@@ -95,7 +94,7 @@ void Simulator::Draw() const {
   }
 }
 
-Particle& Simulator::GetParticleAt(size_t index) {
+Particle Simulator::GetParticleAt(size_t index) const {
   return particles_.at(index);
 }
 

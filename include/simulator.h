@@ -54,7 +54,7 @@ class Simulator {
      *
      * @return a reference to the particle at the given index.
      */
-    Particle& GetParticleAt(size_t index);
+    Particle GetParticleAt(size_t index) const;
 
     /**
      * Gets rid of all the particles in this simulator.
@@ -63,7 +63,8 @@ class Simulator {
 
     /**
      * Adds an additional particle to the simulator.
-     * @param particle
+     *
+     * @param particle the particle to add.
      */
     void AddParticle(const Particle& particle);
 
