@@ -9,14 +9,19 @@ using idealgas::Particle;
 
 Simulator test_simulator(vec2(100,100), 0, 200, 200, 1, 4, "white");
 
+bool AreVectorsEqual(vec2 first, vec2 second) {
+  return (double) first.x == Approx((double) second.x) &&
+         (double) first.y == Approx((double) second.y);
+}
+
 TEST_CASE("Particles move correctly when no collision happens") {
   SECTION("Particle position changes correctly based on velocity") {
     Particle test_particle(vec2(50.0,50.0), vec2(0.4,0.5), 1, 1, "white");
     test_simulator.AddParticle(test_particle);
     test_simulator.Update();
 
-    REQUIRE((double) test_simulator.GetParticleAt(0).position.x == Approx(50.4));
-    REQUIRE((double) test_simulator.GetParticleAt(0).position.y == Approx(50.5));
+    REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).position,
+                            vec2(50.4,50.5)));
   }
 
   SECTION("Particle position should not change if initial velocity is 0,0") {
@@ -25,8 +30,8 @@ TEST_CASE("Particles move correctly when no collision happens") {
     test_simulator.AddParticle(no_velocity_particle);
     test_simulator.Update();
 
-    REQUIRE((double) test_simulator.GetParticleAt(0).position.x == Approx(50.0));
-    REQUIRE((double) test_simulator.GetParticleAt(0).position.y == Approx(50.0));
+    REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).position,
+                            vec2(50.0,50.0)));
   }
 }
 
@@ -39,12 +44,11 @@ TEST_CASE("Particles move correctly when colliding with wall") {
       test_simulator.Update();
 
       //check velocity does NOT change
-      REQUIRE((double)test_simulator.GetParticleAt(0).velocity.x==Approx(0.4));
-      REQUIRE((double)test_simulator.GetParticleAt(0).velocity.y==Approx(0.5));
-
+      REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).velocity,
+                              vec2(0.4,0.5)));
       //check position properly updates
-      REQUIRE((double)test_simulator.GetParticleAt(0).position.x==Approx(50.4));
-      REQUIRE((double)test_simulator.GetParticleAt(0).position.y==Approx(0.5));
+      REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).position,
+                              vec2(50.4,0.5)));
     }
 
     SECTION("Colliding w/ wall negates y component of velocity") {
@@ -54,12 +58,11 @@ TEST_CASE("Particles move correctly when colliding with wall") {
       test_simulator.Update();
 
       //check velocity properly updates
-      REQUIRE((double)test_simulator.GetParticleAt(0).velocity.x==Approx(0.4));
-      REQUIRE((double)test_simulator.GetParticleAt(0).velocity.y==Approx(0.5));
-
+      REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).velocity,
+                             vec2(0.4,0.5)));
       //check position properly updates
-      REQUIRE((double)test_simulator.GetParticleAt(0).position.x==Approx(50.4));
-      REQUIRE((double)test_simulator.GetParticleAt(0).position.y==Approx(0.5));
+      REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).position,
+                              vec2(50.4,0.5)));
     }
   }
 
@@ -71,12 +74,11 @@ TEST_CASE("Particles move correctly when colliding with wall") {
       test_simulator.Update();
 
       //check velocity does NOT change
-      REQUIRE((double)test_simulator.GetParticleAt(0).velocity.x==Approx(0.4));
-      REQUIRE((double)test_simulator.GetParticleAt(0).velocity.y==Approx(-0.5));
-
+      REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).velocity,
+                              vec2(0.4,-0.5)));
       //check position properly updates
-      REQUIRE((double)test_simulator.GetParticleAt(0).position.x==Approx(50.4));
-      REQUIRE((double)test_simulator.GetParticleAt(0).position.y==Approx(197.5));
+      REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).position,
+                              vec2(50.4,197.5)));
     }
 
     SECTION("Colliding w/ wall negates y component of velocity") {
@@ -86,12 +88,11 @@ TEST_CASE("Particles move correctly when colliding with wall") {
       test_simulator.Update();
 
       //check velocity properly updates
-      REQUIRE((double)test_simulator.GetParticleAt(0).velocity.x==Approx(0.4));
-      REQUIRE((double)test_simulator.GetParticleAt(0).velocity.y==Approx(-0.5));
-
+      REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).velocity,
+                              vec2(0.4,-0.5)));
       //check position properly updates
-      REQUIRE((double)test_simulator.GetParticleAt(0).position.x==Approx(50.4));
-      REQUIRE((double)test_simulator.GetParticleAt(0).position.y==Approx(197.5));
+      REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).position,
+                              vec2(50.4,197.5)));
     }
   }
 
@@ -103,12 +104,11 @@ TEST_CASE("Particles move correctly when colliding with wall") {
       test_simulator.Update();
 
       //check velocity does NOT change
-      REQUIRE((double)test_simulator.GetParticleAt(0).velocity.x==Approx(0.4));
-      REQUIRE((double)test_simulator.GetParticleAt(0).velocity.y==Approx(0.5));
-
+      REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).velocity,
+                              vec2(0.4,0.5)));
       //check position properly updates
-      REQUIRE((double)test_simulator.GetParticleAt(0).position.x==Approx(0.4));
-      REQUIRE((double)test_simulator.GetParticleAt(0).position.y==Approx(50.5));
+      REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).position,
+                              vec2(0.4,50.5)));
     }
 
     SECTION("Colliding w/ wall negates x component of velocity") {
@@ -118,12 +118,11 @@ TEST_CASE("Particles move correctly when colliding with wall") {
       test_simulator.Update();
 
       //check velocity properly updates
-      REQUIRE((double)test_simulator.GetParticleAt(0).velocity.x==Approx(0.4));
-      REQUIRE((double)test_simulator.GetParticleAt(0).velocity.y==Approx(0.5));
-
+      REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).velocity,
+                              vec2(0.4,0.5)));
       //check position properly updates
-      REQUIRE((double)test_simulator.GetParticleAt(0).position.x==Approx(0.4));
-      REQUIRE((double)test_simulator.GetParticleAt(0).position.y==Approx(50.5));
+      REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).position,
+                              vec2(0.4,50.5)));
     }
   }
 
@@ -135,12 +134,11 @@ TEST_CASE("Particles move correctly when colliding with wall") {
       test_simulator.Update();
 
       //check velocity does NOT change
-      REQUIRE((double)test_simulator.GetParticleAt(0).velocity.x==Approx(-0.4));
-      REQUIRE((double)test_simulator.GetParticleAt(0).velocity.y==Approx(0.5));
-
+      REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).velocity,
+                              vec2(-0.4,0.5)));
       //check position properly updates
-      REQUIRE((double)test_simulator.GetParticleAt(0).position.x==Approx(197.6));
-      REQUIRE((double)test_simulator.GetParticleAt(0).position.y==Approx(50.5));
+      REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).position,
+                              vec2(197.6,50.5)));
     }
 
     SECTION("Colliding w/ wall negates x component of velocity") {
@@ -150,12 +148,11 @@ TEST_CASE("Particles move correctly when colliding with wall") {
       test_simulator.Update();
 
       //check velocity properly updates
-      REQUIRE((double)test_simulator.GetParticleAt(0).velocity.x==Approx(-0.4));
-      REQUIRE((double)test_simulator.GetParticleAt(0).velocity.y==Approx(0.5));
-
+      REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).velocity,
+                              vec2(-0.4,0.5)));
       //check position properly updates
-      REQUIRE((double)test_simulator.GetParticleAt(0).position.x==Approx(197.6));
-      REQUIRE((double)test_simulator.GetParticleAt(0).position.y==Approx(50.5));
+      REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).position,
+                              vec2(197.6,50.5)));
     }
   }
 }
@@ -171,10 +168,10 @@ TEST_CASE("Particles move correctly when colliding with another particle") {
     test_simulator.Update();
 
     //check velocities do NOT change
-    REQUIRE((double)test_simulator.GetParticleAt(0).velocity.x==Approx(-1.0));
-    REQUIRE((double)test_simulator.GetParticleAt(0).velocity.y==Approx(-1.0));
-    REQUIRE((double)test_simulator.GetParticleAt(1).velocity.x==Approx(1.0));
-    REQUIRE((double)test_simulator.GetParticleAt(1).velocity.y==Approx(1.0));
+    REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).velocity,
+                            vec2(-1.0,-1.0)));
+    REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(1).velocity,
+                            vec2(1.0,1.0)));
   }
 
   SECTION("Particle colliding w/ another correctly change velocity") {
@@ -187,9 +184,9 @@ TEST_CASE("Particles move correctly when colliding with another particle") {
     test_simulator.Update();
 
     //check velocities properly update
-    REQUIRE((double)test_simulator.GetParticleAt(0).velocity.x==Approx(-1.0));
-    REQUIRE((double)test_simulator.GetParticleAt(0).velocity.y==Approx(1.0));
-    REQUIRE((double)test_simulator.GetParticleAt(1).velocity.x==Approx(1.0));
-    REQUIRE((double)test_simulator.GetParticleAt(1).velocity.y==Approx(-1.0));
+    REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).velocity,
+                            vec2(-1.0,1.0)));
+    REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(1).velocity,
+                            vec2(1.0,-1.0)));
   }
 }

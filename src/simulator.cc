@@ -21,7 +21,8 @@ Simulator::Simulator(const vec2 &top_left_corner, size_t number_particles,
   max_x_position_ = (double) container_width_ - particle_radius * 2;
   max_y_position_ = (double) container_height_ - particle_radius * 2;
   max_velocity_magnitude_ = particle_radius * 0.5; //v is small relative to r
-  //generate random velocity for all particles
+
+  //generate random velocity for particles
   double x_velocity = GenerateRandomDouble(max_velocity_magnitude_,
                                            -max_velocity_magnitude_);
   double y_velocity = GenerateRandomDouble(max_velocity_magnitude_,
@@ -43,6 +44,7 @@ Simulator::Simulator(const vec2 &top_left_corner, size_t number_particles,
 void Simulator::Update() {
   //keep track of particles already updated if colliding with an earlier one
   vector<bool> updated_particles(particles_.size(), false);
+
   //loop through particles and update their positions
   for (int index = 0; index < particles_.size(); ++index) {
     //check if this particle already handled from collision with earlier one
@@ -51,6 +53,7 @@ void Simulator::Update() {
     }
 
     Particle& particle = particles_.at(index);
+
     //check for collision w/ horizontal wall (top/bottom of container)
     if ((particle.position.y <= 0 && particle.velocity.y < 0) ||
         (particle.position.y >= max_y_position_ && particle.velocity.y > 0)) {
@@ -61,16 +64,18 @@ void Simulator::Update() {
         (particle.position.x >= max_x_position_ && particle.velocity.x > 0)) {
       particle.velocity.x = -particle.velocity.x;
     }
+
     //check for collision w/ other particle
     for (int other_index = 0; other_index < particles_.size(); ++other_index) {
       Particle& other_particle = particles_.at(other_index);
-      if (index != other_index) {
+      if (index != other_index) { //avoid comparing to itself
         if (HandlePossibleCollision(particle, other_particle)) {
           updated_particles.at(other_index) = true;
           continue;
         }
       }
     }
+
     //update particle's position
     particle.position += particle.velocity;
   }
@@ -142,6 +147,7 @@ bool Simulator::HandlePossibleCollision(Particle &current_particle,
     other_particle.position += other_particle.velocity;
     return true;
   }
+
   return false;
 }
 
