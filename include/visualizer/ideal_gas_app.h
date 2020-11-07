@@ -28,6 +28,7 @@ class IdealGasApp : public ci::app::App {
     //constants for particle container dimensions
     const size_t kContainerWidth = 600;
     const size_t kContainerHeight = 800;
+
     //constants for particles
     const size_t kNumParticles = 15;
     const size_t kParticleMass = 5;

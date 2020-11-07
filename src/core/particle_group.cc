@@ -1,4 +1,4 @@
-#include "core/particle.h"
+#include "core/particle_group.h"
 
 namespace idealgas {
 

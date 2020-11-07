@@ -2,6 +2,7 @@
 
 #include <vector>
 #include "particle.h"
+#include "particle_utils.h"
 
 namespace idealgas {
 

@@ -83,16 +83,6 @@ class IdealGasSimulator {
     double max_velocity_magnitude_;
 
     /**
-     * Generates a random double between a given min and max value.
-     *
-     * @param max_value the max value to generate.
-     * @param min_value the min value to generate.
-     *
-     * @return a random double in the given range.
-     */
-    double GenerateRandomDouble(double max_value, double min_value) const;
-
-    /**
      * Handles a possible collision between a current particle and another.
      * Does nothing if particles do not collide (aka not touching or not moving
      * towards each other).

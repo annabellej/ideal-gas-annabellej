@@ -1,4 +1,5 @@
 #include "visualizer/ideal_gas_simulator.h"
+#include "core/particle_utils.h"
 #include "cinder/gl/gl.h"
 
 namespace idealgas {
@@ -8,6 +9,7 @@ namespace visualizer {
 using glm::vec2;
 using glm::length;
 using glm::dot;
+using idealgas::particleutils::GenerateRandomDouble;
 
 IdealGasSimulator::IdealGasSimulator(const vec2 &top_left_corner, size_t number_particles,
                      size_t container_width, size_t container_height,
@@ -109,10 +111,6 @@ void IdealGasSimulator::ClearParticles() {
 
 void IdealGasSimulator::AddParticle(const Particle &particle) {
   particles_.push_back(particle);
-}
-
-double IdealGasSimulator::GenerateRandomDouble(double max_value, double min_value) const {
-  return (max_value - min_value) * (double) rand() / (double) RAND_MAX;
 }
 
 bool IdealGasSimulator::HandlePossibleCollision(Particle &current_particle,
