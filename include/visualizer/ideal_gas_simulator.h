@@ -1,7 +1,8 @@
 #pragma once
 
 #include <vector>
-#include "particle.h"
+#include "core/particle.h"
+#include "core/particle_group.h"
 #include "cinder/gl/gl.h"
 
 namespace idealgas {
@@ -12,13 +13,13 @@ using std::vector;
 using glm::vec2;
 
 /**
- * A simulator that visualizes the motion of a number of ideal gas particles
+ * A IdealGasSimulator that visualizes the motion of a number of ideal gas particles
  * inside a container over time.
  */
-class Simulator {
+class IdealGasSimulator {
   public:
     /**
-     * Constructor for a Simulator.
+     * Constructor for a IdealGasSimulator.
      *
      * @param top_left_corner   the coordinates of container's top left corner.
      *
@@ -31,7 +32,7 @@ class Simulator {
      * @param particle_radius   the radius of the Particles in this simulation.
      * @param particle_color    the color of the Particles in this simulation.
      */
-    Simulator(const vec2& top_left_corner, size_t number_particles,
+    IdealGasSimulator(const vec2& top_left_corner, size_t number_particles,
               size_t container_width, size_t container_height,
               size_t particle_mass, size_t particle_radius,
               const ci::Color& particle_color);
@@ -47,7 +48,7 @@ class Simulator {
     void Draw() const;
 
     /**
-     * Fetch the particle at the given index in this simulator's vector of
+     * Fetch the particle at the given index in this IdealGasSimulator's vector of
      * particles.
      *
      * @param index the index of the particle to retrieve.
@@ -57,12 +58,12 @@ class Simulator {
     Particle GetParticleAt(size_t index) const;
 
     /**
-     * Gets rid of all the particles in this simulator.
+     * Gets rid of all the particles in this IdealGasSimulator.
      */
     void ClearParticles();
 
     /**
-     * Adds an additional particle to the simulator.
+     * Adds an additional particle to the IdealGasSimulator.
      *
      * @param particle the particle to add.
      */

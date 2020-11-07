@@ -1,4 +1,4 @@
-#include "simulator.h"
+#include "visualizer/ideal_gas_simulator.h"
 #include "cinder/gl/gl.h"
 
 namespace idealgas {
@@ -9,7 +9,7 @@ using glm::vec2;
 using glm::length;
 using glm::dot;
 
-Simulator::Simulator(const vec2 &top_left_corner, size_t number_particles,
+IdealGasSimulator::IdealGasSimulator(const vec2 &top_left_corner, size_t number_particles,
                      size_t container_width, size_t container_height,
                      size_t particle_mass, size_t particle_radius,
                      const ci::Color& particle_color) {
@@ -41,7 +41,7 @@ Simulator::Simulator(const vec2 &top_left_corner, size_t number_particles,
   }
 }
 
-void Simulator::Update() {
+void IdealGasSimulator::Update() {
   //keep track of particles already updated if colliding with an earlier one
   vector<bool> updated_particles(particles_.size(), false);
 
@@ -81,7 +81,7 @@ void Simulator::Update() {
   }
 }
 
-void Simulator::Draw() const {
+void IdealGasSimulator::Draw() const {
   //draw rectangular container for particles
   vec2 pixel_bottom_right = top_left_corner_ +
                             vec2(container_width_, container_height_);
@@ -99,23 +99,23 @@ void Simulator::Draw() const {
   }
 }
 
-Particle Simulator::GetParticleAt(size_t index) const {
+Particle IdealGasSimulator::GetParticleAt(size_t index) const {
   return particles_.at(index);
 }
 
-void Simulator::ClearParticles() {
+void IdealGasSimulator::ClearParticles() {
   particles_.clear();
 }
 
-void Simulator::AddParticle(const Particle &particle) {
+void IdealGasSimulator::AddParticle(const Particle &particle) {
   particles_.push_back(particle);
 }
 
-double Simulator::GenerateRandomDouble(double max_value, double min_value) const {
+double IdealGasSimulator::GenerateRandomDouble(double max_value, double min_value) const {
   return (max_value - min_value) * (double) rand() / (double) RAND_MAX;
 }
 
-bool Simulator::HandlePossibleCollision(Particle &current_particle,
+bool IdealGasSimulator::HandlePossibleCollision(Particle &current_particle,
                                         Particle &other_particle) {
   double distance = length(current_particle.position - other_particle.position);
   bool are_moving_towards = //true if particles are moving towards each other

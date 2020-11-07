@@ -3,7 +3,7 @@
 #include "cinder/app/App.h"
 #include "cinder/app/RendererGl.h"
 #include "cinder/gl/gl.h"
-#include "simulator.h"
+#include "ideal_gas_simulator.h"
 
 namespace idealgas {
 
@@ -23,8 +23,8 @@ class IdealGasApp : public ci::app::App {
     void draw() override;
 
     //constants for display window dimensions
-    const double kWindowSize = 1000;
-    const double kMargin = 50;
+    const size_t kWindowSize = 1000;
+    const size_t kMargin = 50;
     //constants for particle container dimensions
     const size_t kContainerWidth = 600;
     const size_t kContainerHeight = 800;
@@ -35,9 +35,9 @@ class IdealGasApp : public ci::app::App {
     const ci::Color kParticleColor = "white";
 
   private:
-    Simulator simulator_;
+    IdealGasSimulator simulator_;
 };
 
 } // namespace visualizer
 
-} // namepsace idealgas
+} // namespace idealgas

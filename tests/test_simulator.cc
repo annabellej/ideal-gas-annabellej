@@ -1,13 +1,13 @@
-#include "simulator.h"
-#include "particle.h"
+#include "visualizer/ideal_gas_simulator.h"
+#include "core/particle.h"
 #include "cinder/gl/gl.h"
 #include <catch2/catch.hpp>
 
 using glm::vec2;
-using idealgas::visualizer::Simulator;
+using idealgas::visualizer::IdealGasSimulator;
 using idealgas::Particle;
 
-Simulator test_simulator(vec2(100,100), 0, 200, 200, 1, 4, "white");
+IdealGasSimulator test_simulator(vec2(100,100), 0, 200, 200, 1, 4, "white");
 
 bool AreVectorsEqual(vec2 first, vec2 second) {
   return (double) first.x == Approx((double) second.x) &&
@@ -188,5 +188,29 @@ TEST_CASE("Particles move correctly when colliding with another particle") {
                             vec2(-1.0,1.0)));
     REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(1).velocity,
                             vec2(1.0,-1.0)));
+  }
+
+  SECTION("Pairs of particles collide correctly with >2 particles in box") {
+    Particle first_particle(vec2(50.0,50.0), vec2(1.0,1.0), 1, 1, "white");
+    Particle second_particle(vec2(52.0,50.0), vec2(-1.0,-1.0), 1, 1, "white");
+    Particle third_particle(vec2(35.0,40.0), vec2(0.4,0.6), 1, 1, "white");
+    Particle fourth_particle(vec2(0.0,2.0), vec2(0.3,-1.0), 1, 1, "white");
+
+    test_simulator.ClearParticles(); //clear particle(s) from previous test(s)
+    test_simulator.AddParticle(first_particle);
+    test_simulator.AddParticle(second_particle);
+    test_simulator.AddParticle(third_particle);
+    test_simulator.AddParticle(fourth_particle);
+    test_simulator.Update();
+
+    //check only velocities of first two particles change from their collision
+    REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(0).velocity,
+                            vec2(-1.0,1.0)));
+    REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(1).velocity,
+                            vec2(1.0,-1.0)));
+    REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(2).velocity,
+                            vec2(0.4,0.6)));
+    REQUIRE(AreVectorsEqual(test_simulator.GetParticleAt(3).velocity,
+                            vec2(0.3,-1.0)));
   }
 }
