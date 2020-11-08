@@ -39,6 +39,17 @@ struct Particle {
                                                               mass(m),
                                                               radius(r),
                                                               color(c) {};
+
+  /**
+     * Operator overload for < operator. Necessary for Particle use in map.
+     *
+     * @param lhs the left hand side group to compare.
+     * @param rhs the right hand side group to compare.
+     *
+     * @return true if left side has smaller mass then radius than right side,
+     *         false if left side doesn't have smaller mass/radius.
+     */
+  friend bool operator<(const Particle& lhs, const Particle& rhs);
 };
 
 } // namespace idealgas
