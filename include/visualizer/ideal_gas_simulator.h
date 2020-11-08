@@ -54,7 +54,13 @@ class IdealGasSimulator {
     size_t container_width_;
     size_t container_height_;
 
-    vector<ParticleGroup> particle_groups_;
+    vector<ParticleGroup*> particle_groups_;
+
+    /**
+     * Updates movements of all particles in all groups based on possible
+     * collisions between any particles. Helper method for updating.
+     */
+    void HandleAllParticleCollisions();
 };
 
 } // namespace visualizer

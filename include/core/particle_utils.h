@@ -1,12 +1,14 @@
 #pragma once
 
 #include "cinder/gl/gl.h"
+#include "core/particle.h"
 
 namespace idealgas {
 
 namespace particleutils {
 
 using glm::vec2;
+using idealgas::Particle;
 
 /**
  * Generates a random double between a given min and max value.
@@ -36,6 +38,25 @@ vec2 GenerateRandomVelocity(double max_magnitude);
  * @return the generated random position value.
  */
 vec2 GenerateRandomPosition(double max_x, double max_y);
+
+/**
+ * Velocity updated accordingly for particles colliding.
+ *
+ * @param first     the first particle to handle.
+ * @param second    the second particle to handle.
+ */
+void HandleParticleCollision(Particle& first, const Particle& second);
+
+/**
+ * Checks if a collision between two particles happens.
+ *
+ * @param first     the first particle to check.
+ * @param second    the second particle to check.
+ *
+ * @return  true    if a collision happens, else
+ *          false   if a collision doesn't happen.
+ */
+bool ParticleCollisionExists(const Particle& first, const Particle& second);
 
 } // namespace particleutils
 

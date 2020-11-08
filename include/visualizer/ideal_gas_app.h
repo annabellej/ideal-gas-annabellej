@@ -31,17 +31,17 @@ class IdealGasApp : public ci::app::App {
 
     //constants for particles
     const size_t kSmallParticlesCount = 50;
-    const size_t kSmallParticleMass = 5;
+    const size_t kSmallParticleMass = 2;
     const size_t kSmallParticleRadius = 5;
     const ci::Color kSmallParticleColor = "yellow";
 
     const size_t kMidParticlesCount = 30;
-    const size_t kMidParticleMass = 10;
+    const size_t kMidParticleMass = 5;
     const size_t kMidParticleRadius = 10;
     const ci::Color kMidParticleColor = "magenta";
 
     const size_t kBigParticlesCount = 15;
-    const size_t kBigParticleMass = 20;
+    const size_t kBigParticleMass = 15;
     const size_t kBigParticleRadius = 20;
     const ci::Color kBigParticleColor = "cyan";
 

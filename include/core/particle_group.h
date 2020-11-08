@@ -25,14 +25,23 @@ class ParticleGroup {
      * @param max_velocity  the maximum velocity magnitude of particles.
      */
     ParticleGroup(size_t num_particles, size_t mass, size_t radius,
-                  ci::Color color, double max_x_pos, double max_y_pos,
+                  const ci::Color& color, double max_x_pos, double max_y_pos,
                   double max_velocity);
 
     /**
-     * Updates all the positions of the particles in this group by one unit
-     * of time.
+     * Destructor for a Particle Group.
      */
-    void Update();
+    ~ParticleGroup();
+
+    /**
+     * Updates velocities of any particles colliding with walls.
+     */
+    void HandlePossibleWallCollisions();
+
+    /**
+     * Updates all positions of particles according to velocities.
+     */
+    void UpdatePositions();
 
     /**
      * Fetches the size of this particle group, aka how many particles.
@@ -42,14 +51,14 @@ class ParticleGroup {
     size_t GetGroupSize() const;
 
     /**
-     * Fetch the particle at the given index in this IdealGasSimulator's vector of
-     * particles.
+     * Fetch a pointer to the particle at the given index in this
+     * IdealGasSimulator's vector of particles.
      *
      * @param index the index of the particle to retrieve.
      *
-     * @return a reference to the particle at the given index.
+     * @return a pointer to the particle at the given index.
      */
-    Particle GetParticleAt(size_t index) const;
+    Particle* GetParticleAt(size_t index) const;
 
     /**
      * Gets rid of all the particles in this IdealGasSimulator.
@@ -64,33 +73,12 @@ class ParticleGroup {
     void AddParticle(const Particle& particle);
 
   private:
-    vector<Particle> particles_;
-
-    //particle details
-    size_t particle_mass_;
-    size_t particle_radius_;
-    ci::Color particle_color_;
+    vector<Particle>* particles_;
 
     //maximum values of position/velocity for particles in container:
     double max_x_position_;
     double max_y_position_;
     double max_velocity_magnitude_;
-
-    /**
-   * Handles a possible collision between a current particle and another.
-   * Does nothing if particles do not collide (aka not touching or not moving
-   * towards each other).
-   * If particles do collide, velocity of current particle is adjusted
-   * accordingly.
-   *
-   * @param current_particle the current particle to examine.
-   * @param other_particle   the other particle to examine.
-   *
-   * @return true  if there was a collision between particles, else
-   *         false if there was no collision.
-   */
-    bool HandlePossibleCollision(Particle& current_particle,
-                                 Particle& other_particle);
 };
 
 } //namespace idealgas
