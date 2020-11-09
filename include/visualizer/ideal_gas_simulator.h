@@ -34,10 +34,20 @@ class IdealGasSimulator {
      *
      * @param container_width       the width in pixels of the container.
      * @param container_height      the height in pixels of the container.
+     * @param histogram_width       the width in pixels of histograms.
+     * @param histogram_height      the height in pixels of histograms.
+     *
+     * @param display_margin        pixel count for margins of display.
+     *
+     * @param num_buckets           number of buckets for histogram displays.
+     * @param y_interval            pixels in one y axis interval on histogram.
      */
     IdealGasSimulator(const vec2& top_left_corner,
                       const map<Particle, size_t>& particle_information,
-                      size_t container_width, size_t container_height);
+                      size_t container_width, size_t container_height,
+                      size_t histogram_width, size_t histogram_height,
+                      size_t display_margin, size_t num_buckets,
+                      size_t y_interval);
 
     /**
      * Updates the particles' movement after one unit of time.
@@ -53,6 +63,13 @@ class IdealGasSimulator {
     vec2 top_left_corner_;
     size_t container_width_;
     size_t container_height_;
+    size_t display_margin_;
+
+    //histogram details
+    size_t histogram_width_;
+    size_t histogram_height_;
+    size_t bucket_count_;
+    size_t y_interval_pixels_;
 
     vector<ParticleGroup*> particle_groups_;
 
@@ -61,6 +78,28 @@ class IdealGasSimulator {
      * collisions between any particles. Helper method for updating.
      */
     void HandleAllParticleCollisions();
+
+    /**
+     * Draws histograms for all particle groups on display.
+     */
+    void DrawHistograms() const;
+
+    /**
+     * Draws the outline and axes for a histogram.
+     *
+     * @param top_left      vector denoting top left corner of histogram.
+     * @param bottom_right  vector denoting bottom right corner of histogram.
+     */
+    void DrawHistogramBox(vec2 top_left, vec2 bottom_right) const;
+
+    /**
+     * Draws the bars of a histogram based on a group of particles.
+     *
+     * @param particle_group the group of particles to analyze.
+     * @param bottom_left vector denoting bottom left corner of histogram to
+     *                    draw the bars for.
+     */
+    void DrawHistogramBars(ParticleGroup* particle_group, vec2 bottom_left) const;
 };
 
 } // namespace visualizer

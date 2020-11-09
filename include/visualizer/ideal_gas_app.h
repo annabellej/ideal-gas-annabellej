@@ -25,24 +25,28 @@ class IdealGasApp : public ci::app::App {
     //constants for display window dimensions
     const size_t kWindowSize = 1000;
     const size_t kMargin = 50;
-    //constants for particle container dimensions
+    //constants for container/histogram dimensions
     const size_t kContainerWidth = 600;
     const size_t kContainerHeight = 800;
+    const size_t kHistogramWidth = 250;
+    const size_t kHistogramHeight = 200;
+    const size_t kNumBuckets = 10;
+    const size_t kYIntervalPixels = 2;
 
     //constants for particles
-    const size_t kSmallParticlesCount = 50;
+    const size_t kSmallParticlesCount = 100;
     const size_t kSmallParticleMass = 2;
     const size_t kSmallParticleRadius = 5;
     const ci::Color kSmallParticleColor = "yellow";
 
-    const size_t kMidParticlesCount = 30;
+    const size_t kMidParticlesCount = 50;
     const size_t kMidParticleMass = 5;
     const size_t kMidParticleRadius = 10;
     const ci::Color kMidParticleColor = "magenta";
 
-    const size_t kBigParticlesCount = 15;
+    const size_t kBigParticlesCount = 25;
     const size_t kBigParticleMass = 15;
-    const size_t kBigParticleRadius = 20;
+    const size_t kBigParticleRadius = 15;
     const ci::Color kBigParticleColor = "cyan";
 
   private:

@@ -72,8 +72,16 @@ class ParticleGroup {
      */
     void AddParticle(const Particle& particle);
 
+    /**
+     * Fetches the color of the particles in this group.
+     *
+     * @return the color of this group.
+     */
+    ci::Color GetGroupColor();
+
   private:
     vector<Particle>* particles_;
+    ci::Color particle_color_;
 
     //maximum values of position/velocity for particles in container:
     double max_x_position_;

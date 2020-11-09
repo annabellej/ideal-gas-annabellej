@@ -9,6 +9,7 @@ using idealgas::particleutils::GenerateRandomPosition;
 ParticleGroup::ParticleGroup(size_t num_particles, size_t mass, size_t radius,
                              const ci::Color& color, double max_x_pos,
                              double max_y_pos, double max_velocity) {
+  particle_color_ = color;
   max_x_position_ = max_x_pos;
   max_y_position_ = max_y_pos;
   max_velocity_magnitude_ = max_velocity;
@@ -62,6 +63,10 @@ void ParticleGroup::ClearParticles() {
 
 void ParticleGroup::AddParticle(const Particle &particle) {
   particles_->push_back(particle);
+}
+
+ci::Color ParticleGroup::GetGroupColor() {
+  return particle_color_;
 }
 
 } //namespace idealgas

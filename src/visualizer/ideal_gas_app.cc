@@ -28,7 +28,9 @@ IdealGasApp::IdealGasApp() {
   //initialize simulator and set up display window
   simulator_ = IdealGasSimulator(vec2(kMargin, kMargin),
                                  particle_information, kContainerWidth,
-                                 kContainerHeight);
+                                 kContainerHeight, kHistogramWidth,
+                                 kHistogramHeight, kMargin, kNumBuckets,
+                                 kYIntervalPixels);
   ci::app::setWindowSize((int) kWindowSize, (int) kWindowSize);
 };
 
