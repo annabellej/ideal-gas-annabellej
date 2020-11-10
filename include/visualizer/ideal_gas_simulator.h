@@ -50,6 +50,31 @@ class IdealGasSimulator {
                       size_t y_interval);
 
     /**
+     * Secondary constructor for an Ideal Gas Simulator with multiple particle
+     * types. Used for testing, given particle groups to simulate.
+     *
+     * @param top_left_corner       coordinates of container's top left corner.
+     *
+     * @param groups                vector list of groups to simulate.
+     *
+     * @param container_width       the width in pixels of the container.
+     * @param container_height      the height in pixels of the container.
+     * @param histogram_width       the width in pixels of histograms.
+     * @param histogram_height      the height in pixels of histograms.
+     *
+     * @param display_margin        pixel count for margins of display.
+     *
+     * @param num_buckets           number of buckets for histogram displays.
+     * @param y_interval            pixels in one y axis interval on histogram.
+     */
+    IdealGasSimulator(const vec2& top_left_corner,
+                      const vector<ParticleGroup*>& groups,
+                      size_t container_width, size_t container_height,
+                      size_t histogram_width, size_t histogram_height,
+                      size_t display_margin, size_t num_buckets,
+                      size_t y_interval);
+
+    /**
      * Updates the particles' movement after one unit of time.
      */
     void Update();

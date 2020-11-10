@@ -47,6 +47,23 @@ IdealGasSimulator::IdealGasSimulator(const vec2 &top_left_corner,
   }
 }
 
+IdealGasSimulator::IdealGasSimulator(const vec2& top_left_corner,
+                                     const vector<ParticleGroup*>& groups,
+                                     size_t container_width, size_t container_height,
+                                     size_t histogram_width, size_t histogram_height,
+                                     size_t display_margin, size_t num_buckets,
+                                     size_t y_interval) {
+  particle_groups_ = groups;
+  top_left_corner_ = top_left_corner;
+  container_width_ = container_width;
+  container_height_ = container_height;
+  histogram_width_ = histogram_width;
+  histogram_height_ = histogram_height;
+  bucket_count_ = num_buckets;
+  y_interval_pixels_ = y_interval;
+  display_margin_ = display_margin;
+}
+
 void IdealGasSimulator::Update() {
   //update particles/walls colliding
   for (ParticleGroup* group: particle_groups_) {
@@ -86,7 +103,7 @@ void IdealGasSimulator::Draw() const {
 }
 
 void IdealGasSimulator::HandleAllParticleCollisions() {
-  //make list of all particles from all groups (Particle references)
+  //make list of all particles from all groups
   vector<Particle*> all_particles;
   for (ParticleGroup* group: particle_groups_) {
     for (size_t index = 0; index < group->GetGroupSize(); index++) {

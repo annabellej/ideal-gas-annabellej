@@ -8,9 +8,9 @@ using glm::vec2;
 
 ParticleGroup* test_group = new ParticleGroup(2, 1, 1, "white", 100.0,100.0,1.0);
 
-bool AreVectorsEqual(vec2 first, vec2 second) {
-  return (double) first.x == Approx((double) second.x) &&
-         (double) first.y == Approx((double) second.y);
+bool AreVectorsEqual(const vec2& first, const vec2& second) {
+  return (double) first.x == Approx((double) second.x).epsilon(0.1) &&
+         (double) first.y == Approx((double) second.y).epsilon(0.1);
 }
 
 TEST_CASE("Group of particles properly constructed based on given arguments") {
