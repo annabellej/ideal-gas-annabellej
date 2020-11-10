@@ -80,26 +80,9 @@ class IdealGasSimulator {
     void HandleAllParticleCollisions();
 
     /**
-     * Draws histograms for all particle groups on display.
+     * Draws histograms for all particle groups on the display.
      */
     void DrawHistograms() const;
-
-    /**
-     * Draws the outline and axes for a histogram.
-     *
-     * @param top_left      vector denoting top left corner of histogram.
-     * @param bottom_right  vector denoting bottom right corner of histogram.
-     */
-    void DrawHistogramBox(vec2 top_left, vec2 bottom_right) const;
-
-    /**
-     * Draws the bars of a histogram based on a group of particles.
-     *
-     * @param particle_group the group of particles to analyze.
-     * @param bottom_left vector denoting bottom left corner of histogram to
-     *                    draw the bars for.
-     */
-    void DrawHistogramBars(ParticleGroup* particle_group, vec2 bottom_left) const;
 };
 
 } // namespace visualizer

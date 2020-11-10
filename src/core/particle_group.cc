@@ -65,7 +65,7 @@ void ParticleGroup::AddParticle(const Particle &particle) {
   particles_->push_back(particle);
 }
 
-ci::Color ParticleGroup::GetGroupColor() {
+ci::Color ParticleGroup::GetGroupColor() const {
   return particle_color_;
 }
 

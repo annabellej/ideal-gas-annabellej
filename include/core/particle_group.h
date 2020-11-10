@@ -77,7 +77,7 @@ class ParticleGroup {
      *
      * @return the color of this group.
      */
-    ci::Color GetGroupColor();
+    ci::Color GetGroupColor() const;
 
   private:
     vector<Particle>* particles_;

@@ -52,6 +52,7 @@ include("${CINDER_PATH}/proj/cmake/modules/cinderMakeApp.cmake")
 list(APPEND CORE_SOURCE_FILES src/core/particle.cc)
 list(APPEND CORE_SOURCE_FILES src/core/particle_group.cc)
 list(APPEND CORE_SOURCE_FILES src/core/particle_utils.cc)
+list(APPEND CORE_SOURCE_FILES src/core/ideal_gas_histogram.cc)
 
 list(APPEND SOURCE_FILES    ${CORE_SOURCE_FILES}
                             src/visualizer/ideal_gas_app.cc
