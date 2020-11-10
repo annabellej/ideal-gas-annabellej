@@ -55,9 +55,8 @@ void IdealGasHistogram::DrawHistogramBox() const {
   ci::gl::drawStrokedRect(histogram_box);
 
   //draw horizontal axis label
-  ci::gl::drawStringCentered("Speed",
-                             vec2(bottom_right_.x-(histogram_width_/2),
-                                  bottom_right_.y+display_margin_/10));
+  ci::gl::drawStringCentered("Speed", vec2(bottom_right_.x-(histogram_width_/2),
+                                           bottom_right_.y+display_margin_/10));
   //draw vertical axis label
   //method to rotate text from: https://discourse.libcinder.org/t/what-is-the-best-way-to-rotate-rectangles-images/410/2
   ci::gl::pushModelMatrix();
@@ -89,9 +88,9 @@ void IdealGasHistogram::DrawHistogramBars(vec2 bottom_left) const {
 
 void IdealGasHistogram::ListSortedParticleSpeeds() {
   for (size_t index = 0; index < particle_group_->GetGroupSize(); ++index) {
-    particle_speeds_.push_back(glm::length(particle_group_->GetParticleAt(index)->velocity));
+    particle_speeds_.push_back(glm::length(particle_group_->
+                                           GetParticleAt(index)->velocity));
   }
-
   std::sort(particle_speeds_.begin(), particle_speeds_.end());
 }
 

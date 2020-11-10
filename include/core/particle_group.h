@@ -9,6 +9,9 @@ namespace idealgas {
 using std::vector;
 using idealgas::Particle;
 
+/**
+ * Represents a group of ideal gas particles with the same characteristics.
+ */
 class ParticleGroup {
   public:
     /**

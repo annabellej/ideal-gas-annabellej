@@ -15,8 +15,8 @@ using std::map;
 using glm::vec2;
 
 /**
- * A IdealGasSimulator that visualizes the motion of a number of ideal gas particles
- * inside a container over time.
+ * A IdealGasSimulator that visualizes the motion of a number of ideal gas
+ * particles inside a container over time.
  */
 class IdealGasSimulator {
   public:
@@ -105,9 +105,22 @@ class IdealGasSimulator {
     void HandleAllParticleCollisions();
 
     /**
+     * Draws all particles from all groups for the display.
+     */
+    void DrawParticles() const;
+
+    /**
      * Draws histograms for all particle groups on the display.
      */
     void DrawHistograms() const;
+
+    /**
+     * Creates a list of all particles from all groups in this simulator.
+     * Helper for handling particle collisions.
+     *
+     * @return a vector list of all particles.
+     */
+    vector<Particle*> ListAllParticles() const;
 };
 
 } // namespace visualizer

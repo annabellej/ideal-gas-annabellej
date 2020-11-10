@@ -87,31 +87,15 @@ void IdealGasSimulator::Draw() const {
   ci::gl::color(ci::Color("white"));
   ci::gl::drawStrokedRect(container_box);
 
-  //draw particles inside container
-  for (ParticleGroup* group: particle_groups_) {
-    for (size_t index = 0; index < group->GetGroupSize(); index++) {
-      Particle current_particle = *group->GetParticleAt(index);
-      size_t radius = current_particle.radius;
-      vec2 screen_position = current_particle.position + top_left_corner_ +
-                             vec2(radius, radius);
-      ci::gl::color(ci::Color(current_particle.color));
-      ci::gl::drawSolidCircle(screen_position, current_particle.radius);
-    }
-  }
-
+  //draw particles and histograms
+  DrawParticles();
   DrawHistograms();
 }
 
 void IdealGasSimulator::HandleAllParticleCollisions() {
   //make list of all particles from all groups
-  vector<Particle*> all_particles;
-  for (ParticleGroup* group: particle_groups_) {
-    for (size_t index = 0; index < group->GetGroupSize(); index++) {
-      Particle* current_particle = group->GetParticleAt(index);
-      all_particles.push_back(current_particle);
-    }
-  }
-  //make bool list parallel to particle list (keep track of already updated)
+  vector<Particle*> all_particles = ListAllParticles();
+  //make bool list to keep track of already updated
   vector<bool> updated_particles(all_particles.size(), false);
 
   //go through particle list and handle collisions between any of them
@@ -119,7 +103,6 @@ void IdealGasSimulator::HandleAllParticleCollisions() {
     if (updated_particles.at(index)) {
       continue;
     }
-
     Particle* first_particle = all_particles.at(index);
     for (size_t other_index = 0; other_index < all_particles.size() &&
                                  other_index != index; other_index++) {
@@ -138,22 +121,47 @@ void IdealGasSimulator::HandleAllParticleCollisions() {
   }
 }
 
+void IdealGasSimulator::DrawParticles() const {
+  for (ParticleGroup* group: particle_groups_) {
+    for (size_t index = 0; index < group->GetGroupSize(); index++) {
+      Particle current_particle = *group->GetParticleAt(index);
+      size_t radius = current_particle.radius;
+      vec2 screen_position = current_particle.position + top_left_corner_ +
+                             vec2(radius, radius);
+      ci::gl::color(ci::Color(current_particle.color));
+      ci::gl::drawSolidCircle(screen_position, current_particle.radius);
+    }
+  }
+}
+
 void IdealGasSimulator::DrawHistograms() const {
   vec2 bottom_right;
   vec2 top_left = top_left_corner_ + vec2(container_width_,0) +
-                  vec2(display_margin_,0) - vec2(0,
-                                        histogram_height_ + display_margin_);
+                  vec2(display_margin_,0) - vec2(0, histogram_height_ + display_margin_);
 
   for (ParticleGroup* group: particle_groups_) {
     top_left = top_left + vec2(0, histogram_height_ + display_margin_);
     bottom_right = top_left + vec2(histogram_width_, histogram_height_);
 
-    auto* histogram = new IdealGasHistogram(top_left, bottom_right, group,
+    IdealGasHistogram* histogram = new IdealGasHistogram(top_left, bottom_right, group,
                                             histogram_width_, histogram_height_,
                                             display_margin_, bucket_count_,
                                             y_interval_pixels_);
     histogram->DrawHistogram();
   }
+}
+
+vector<Particle*> IdealGasSimulator::ListAllParticles() const {
+  vector<Particle*> all_particles;
+
+  for (ParticleGroup* group: particle_groups_) {
+    for (size_t index = 0; index < group->GetGroupSize(); index++) {
+      Particle* current_particle = group->GetParticleAt(index);
+      all_particles.push_back(current_particle);
+    }
+  }
+
+  return all_particles;
 }
 
 } // namespace visualizer
